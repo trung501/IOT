@@ -48,7 +48,7 @@ try:
     while True:
         network.update()
         while network.available():
-            header, payload = network.read(4)            
+            header, payload = network.read(2)            
             print("payload length ", len(payload))
             print(
                 f"Received payload {list(payload)[0]} from {oct(header.from_node)}",
