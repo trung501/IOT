@@ -1,5 +1,5 @@
 from RF24 import RF24
-from RF24Network import RF24Network.RF24NetworkHeader
+from RF24Network import RF24Network,RF24NetworkHeader
 import time
 
 radio = RF24(22, 0,1000000)
