@@ -40,7 +40,7 @@ try:
         if now - last_sent >= interval:
             last_sent = now
             packets_sent += 1
-            ok = network.write(RF24NetworkHeader(other_node1), packets_sent.to_bytes(2, 'big'))
+            ok = network.write(RF24NetworkHeader(other_node1), str(packets_sent).encode())
             print(f"Sending  {packets_sent} to {other_node1}...", "ok." if ok else "failed.")
         
 except KeyboardInterrupt:
