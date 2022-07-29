@@ -48,7 +48,7 @@ try:
     while True:
         network.update()
         while network.available():
-            header, payload = network.read(2)
+            header, payload = network.read(8)
             print("payload length ", len(payload))
             millis, number = struct.unpack("<LL", bytes(payload))
             print(
