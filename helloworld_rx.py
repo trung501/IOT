@@ -51,10 +51,11 @@ try:
             header, payload = network.read(8)
             print("payload length ", len(payload))
             millis, number = struct.unpack("<LL", bytes(payload))
-            print(
-                f"Received payload {number} from {oct(header.from_node)}",
-                f"to {oct(header.to_node)} at (origin's timestamp) {millis}",
-            )
+            # print(
+            #     f"Received payload {number} from {oct(header.from_node)}",
+            #     f"to {oct(header.to_node)} at (origin's timestamp) {millis}",
+            # )
+            print("payload:",payload)
 except KeyboardInterrupt:
     print("powering down radio and exiting.")
     radio.powerDown()
