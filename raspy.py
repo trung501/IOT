@@ -26,7 +26,7 @@ try:
         #Nhan goi tin
         network.update()
         while network.available():
-            header, payload = network.read(4)  
+            header, payload = network.read(8)  
             data= struct.unpack("I", bytes(payload))        
             print(
                 f"Received payload {data} from {oct(header.from_node)}",
