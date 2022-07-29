@@ -51,7 +51,7 @@ try:
             header, payload = network.read(4)            
             print("payload length ", len(payload))
             print(
-                f"Received payload {bytes(payload)} from {oct(header.from_node)}",
+                f"Received payload {list(payload)[0]} from {oct(header.from_node)}",
                 f"to {oct(header.to_node)} ",
             )
             # print("payload:",payload)
