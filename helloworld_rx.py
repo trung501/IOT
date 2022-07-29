@@ -48,15 +48,13 @@ try:
     while True:
         network.update()
         while network.available():
-            header, payload = network.read()            
+            header, payload = network.read(4)            
             print("payload length ", len(payload))
-
-            # millis, number = struct.unpack("<LL", bytes(payload))
             print(
-                f"Received payload  from {oct(header.from_node)}",
-                f"to {oct(header.to_node)} at (origin's timestamp) ",
+                f"Received payload {int.from_bytes(payload, "big")} from {oct(header.from_node)}",
+                f"to {oct(header.to_node)} ",
             )
-            print("payload:",payload)
+            # print("payload:",payload)
 except KeyboardInterrupt:
     print("powering down radio and exiting.")
     radio.powerDown()
