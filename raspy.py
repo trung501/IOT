@@ -1,5 +1,6 @@
 from RF24 import RF24
 from RF24Network import RF24Network,RF24NetworkHeader
+import struct
 import time
 
 radio = RF24(22, 0,1000000)
@@ -40,7 +41,8 @@ try:
         if now - last_sent >= interval:
             last_sent = now
             packets_sent += 1
-            ok = network.write(RF24NetworkHeader(other_node1), str(packets_sent).encode())
+            payload = struct.pack("I", packets_sent)
+            ok = network.write(RF24NetworkHeader(other_node1), payload)
             print(f"Sending  {packets_sent} to {other_node1}...", "ok." if ok else "failed.")
         
 except KeyboardInterrupt:
