@@ -16,6 +16,7 @@ network.begin(this_node)
 radio.printPrettyDetails()
 radio.startListening()  # put radio in RX mode
 
+interval = 2000  # in milliseconds
 packets_sent = 0
 last_sent = 0
 try:
@@ -39,8 +40,8 @@ try:
         if now - last_sent >= interval:
             last_sent = now
             packets_sent += 1
-            ok = network.write(RF24NetworkHeader(other_node), packets_sent)
-            print(f"Sending {packets_sent}...", "ok." if ok else "failed.")
+            ok = network.write(RF24NetworkHeader(other_node1), packets_sent)
+            print(f"Sending  {packets_sent} to {other_node1}...", "ok." if ok else "failed.")
         
 except KeyboardInterrupt:
     print("powering down radio and exiting.")
