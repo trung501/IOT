@@ -34,10 +34,11 @@ class IOT_Rasp:
                     header, payload = self.network.read(10)  
                     checkReceive,data = self.checkXacThuc(payload)
                     if checkReceive==True:
-                        print(
-                        f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
-                        f"to {oct(header.to_node)} "
-                        )
+                        # print(
+                        # f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
+                        # f"to {oct(header.to_node)} "
+                        # )
+                        pass
                     else:
                         print("Nhan payload",payload)
                     
