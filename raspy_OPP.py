@@ -62,7 +62,7 @@ class IOT_Rasp:
             self.packets_sent += 1
             # self.sendToNode(node1,0,self.packets_sent)  
             self.sendToNode(node2,0,self.packets_sent)  
-            self.sendToNode(node12,0,self.packets_sent)           
+            self.sendToNode(node12,0,self.packets_sent+15)           
 
     def run(self):
         try:
