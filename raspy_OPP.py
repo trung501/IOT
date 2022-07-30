@@ -12,7 +12,7 @@ class IOT_Rasp:
         self.CE=CE
         self.CSN=CSN
         self.this_node= this_node
-        self.radio = RF24(CE, CSN,1000000)
+        self.radio = RF24(22, 0,1000000)
         self.network=RF24Network(self.radio)
         self.xacThuc1=52836
         self.xacThuc2=147
