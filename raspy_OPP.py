@@ -59,8 +59,7 @@ class IOT_Rasp:
         if now - self.last_sent >= self.interval:
             self.last_sent = now
             self.packets_sent += 1
-            self.sendToNode(node1,0,self.packets_sent)
-            
+            self.sendToNode(node1,0,self.packets_sent)            
 
     def run(self):
         try:
