@@ -5,7 +5,7 @@
 #include <Servo.h>
 
 
-RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
+RF24 radio(D4, D8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
@@ -13,10 +13,10 @@ const uint16_t node01 = 01;
 unsigned int xacThuc1=52836;
 byte xacThuc2=147;
 struct sending{
-   unsigned int xacThuc1;
+   unsigned short xacThuc1;
    byte device;
    byte xacThuc2;
-   unsigned int value;
+   unsigned short value;
 };
 
 bool checkXacThuc(sending Data){
@@ -31,7 +31,7 @@ void setup() {
   radio.begin();
   network.begin(90, this_node); //(channel, node address)
   radio.setDataRate(RF24_1MBPS);
-  Serial.begin(9600);
+   Serial.begin(115200);
   Serial.println("delay 1000");
   delay(1000);
   Serial.println("setup finish");
@@ -52,20 +52,26 @@ void loop() {
       Serial.print(" from node ") ;
       Serial.println(header.from_node);      
       }    
+      else{
+         Serial.println("Du lieu gui den chua xac dinh");   
+        }
   }
   
   RF24NetworkHeader header00(master00);
-  sending data ={xacThuc1,1,xacThuc2,20};
+  sending data ={xacThuc1,1,xacThuc2,6};
   bool ok = network.write(header00, &data, sizeof(data)); // Send the data
   delay(1000);
   data.device=2;
-  data.value=39;
+  data.value=661;
   ok =  network.write(header00, &data, sizeof(data)); // Send the data
+  Serial.print("Send note 00 is ");
+   Serial.println(ok);
   delay(1000);
   
   RF24NetworkHeader header01(node01);
   data.device=5;
   data.value=17;
   ok = network.write(header01, &data, sizeof(data)); // Send the data
-  
+   Serial.print("Send note 01 is ");
+   Serial.println(ok);
 }

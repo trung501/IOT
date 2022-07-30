@@ -5,9 +5,9 @@
 #include <Servo.h>
 
 
-RF24 radio(D4, D8);               // nRF24L01 (CE,CSN)
+RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
-const uint16_t this_node = 012;   // Address of our node in Octal format ( 04,031, etc)
+const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 const uint16_t node01 = 01;
 unsigned int xacThuc1=52836;
@@ -31,7 +31,7 @@ void setup() {
   radio.begin();
   network.begin(90, this_node); //(channel, node address)
   radio.setDataRate(RF24_1MBPS);
-   Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println("delay 1000");
   delay(1000);
   Serial.println("setup finish");
