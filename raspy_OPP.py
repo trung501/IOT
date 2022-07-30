@@ -47,16 +47,20 @@ class IOT_Rasp:
             else:
                 print("Nhan payload",payload)
     
-    def sendToMCU(self,node):
+    def sendToNode(self,node,device,value ):
+        payload = struct.pack("HBBH", self.xacThuc1 ,device,self.xacThuc2,self.packets_sent)
+        ok = self.network.write(RF24NetworkHeader(node), payload)
+        print(f"Sending  {value} to device {device} of node {node}...", "ok." if ok else "failed.")
+
+    def sendToMCU(self):
         self.network.update()
         now = int(time.monotonic_ns() / 1000000)
         # If it's time to send a message, send it!
         if now - self.last_sent >= self.interval:
             self.last_sent = now
             self.packets_sent += 1
-            payload = struct.pack("HBBH", self.xacThuc1 ,0,self.xacThuc2,self.packets_sent)
-            ok = self.network.write(RF24NetworkHeader(node1), payload)
-            print(f"Sending  {self.packets_sent} to {node1}...", "ok." if ok else "failed.")
+            self.sendToNode(node1,0,self.packets_sent)
+            
 
     def run(self):
         try:
