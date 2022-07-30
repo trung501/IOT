@@ -38,7 +38,7 @@ try:
             checkReceive,data = checkXacThuc(payload)
             if checkReceive==True:
                 print(
-                f"Received state {data[3]} of value {data[1]} from {oct(header.from_node)}",
+                f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
                 f"to {oct(header.to_node)} ",
             )
             else:
