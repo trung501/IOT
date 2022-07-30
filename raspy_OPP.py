@@ -17,7 +17,6 @@ class IOT_Rasp:
         self.xacThuc1=52836
         self.xacThuc2=147
         self.interval=2000
-        self.network.update()
         self.radio.channel = 90
         self.network.begin(self.this_node)
         self.radio.printPrettyDetails()
