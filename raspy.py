@@ -20,7 +20,7 @@ radio.startListening()  # put radio in RX mode
 def checkXacThuc(data):
     if len(data) != 8:
         return False
-    data= struct.unpack("IBBI",data)
+    data= struct.unpack("HBBH",data)
     print(data)
 
 
