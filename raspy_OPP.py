@@ -17,6 +17,7 @@ class IOT_Rasp:
         self.xacThuc1=52836
         self.xacThuc2=147
         self.interval=2000
+        print("finish init")
 
     def checkXacThuc(self,data):
         if len(data) != 6:
