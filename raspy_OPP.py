@@ -30,14 +30,14 @@ class IOT_Rasp:
             while True:
                 #Nhan goi tin
                 self.network.update()
-                while network.available():
+                while self.network.available():
                     header, payload = self.network.read(10)  
                     checkReceive,data = self.checkXacThuc(payload)
                     if checkReceive==True:
                         print(
                         f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
-                        f"to {oct(header.to_node)} ",
-                    )
+                        f"to {oct(header.to_node)} "
+                        )
                     else:
                         print("Nhan payload",payload)
                     
