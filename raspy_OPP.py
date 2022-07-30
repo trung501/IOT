@@ -13,7 +13,7 @@ class IOT_Rasp:
         self.CSN=CSN
         self.this_node= this_node
         self.radio = RF24(CE, CSN,1000000)
-        self.network=RF24Network(radio)
+        self.network=RF24Network(self.radio)
         self.xacThuc1=52836
         self.xacThuc2=147
         self.interval=2000
@@ -34,11 +34,10 @@ class IOT_Rasp:
                     header, payload = self.network.read(10)  
                     checkReceive,data = self.checkXacThuc(payload)
                     if checkReceive==True:
-                        # print(
-                        # f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
-                        # f"to {oct(header.to_node)} "
-                        # )
-                        pass
+                        print(
+                        f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
+                        f"to {oct(header.to_node)} "
+                        )
                     else:
                         print("Nhan payload",payload)
                     
