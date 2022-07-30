@@ -55,7 +55,6 @@ class IOT_Rasp:
     def sendToMCU(self):
         self.network.update()
         now = int(time.monotonic_ns() / 1000000)
-        # If it's time to send a message, send it!
         if now - self.last_sent >= self.interval:
             self.last_sent = now
             self.packets_sent += 1
@@ -65,7 +64,6 @@ class IOT_Rasp:
         try:
             while True:
                 self.receiveFromMCU()    
-                time.sleep(0.1)
                 self.sendToMCU()                
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
