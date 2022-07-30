@@ -62,7 +62,7 @@ class IOT_Rasp:
                 else :
                     print("Khong co xu ly tu node",header.from_node)
             else:
-                print("Nhan payload",payload,"from node",oct(header.from_node)
+                print("Nhan payload",payload,"from node",oct(header.from_node))
     
     def sendToNode(self,node,device,value ):
         payload = struct.pack("HBBH", self.xacThuc1 ,device,self.xacThuc2,self.packets_sent)
