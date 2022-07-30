@@ -23,6 +23,7 @@ class IOT_Rasp:
         self.radio.printPrettyDetails()
         self.radio.startListening()
 
+
     def checkXacThuc(self,data):
         if len(data) != 6:
             return False,0
