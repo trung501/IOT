@@ -27,8 +27,6 @@ class IOT_Rasp:
         self.last_sent = 0
         self.packets_sent = 0
 
-
-
     def checkXacThuc(self,data):
         if len(data) != 6:
             return False,0
@@ -63,14 +61,9 @@ class IOT_Rasp:
     def run(self):
         try:
             while True:
-                #Nhan goi tin
-                self.receive()
-                    
+                self.receive()    
                 time.sleep(0.1)
-
-                # Gui goi tin
-                self.send()
-                
+                self.send()                
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
