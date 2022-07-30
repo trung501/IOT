@@ -5,8 +5,7 @@ import struct
 import time
 
 node1 = 0o1
-packets_sent = 0
-last_sent = 0
+
 class IOT_Rasp:
     def __init__(self,CE,CSN,this_node):
         self.CE=CE
@@ -16,13 +15,16 @@ class IOT_Rasp:
         self.network=RF24Network(self.radio)
         if not self.radio.begin():
             raise RuntimeError("radio hardware not responding")       
-        self.interval=2000
         self.radio.channel = 90
         self.network.begin(self.this_node)
         self.radio.printPrettyDetails()
         self.radio.startListening()
         self.xacThuc1=52836
         self.xacThuc2=147
+        self.interval=2000
+        self.last_sent = 0
+        self.packets_sent = 0
+
 
 
     def checkXacThuc(self,data):
@@ -54,12 +56,12 @@ class IOT_Rasp:
                 self.network.update()
                 now = int(time.monotonic_ns() / 1000000)
                 # If it's time to send a message, send it!
-                if now - last_sent >= interval:
-                    last_sent = now
-                    packets_sent += 1
-                    payload = struct.pack("HBBH", self.xacThuc1 ,0,self.xacThuc2,packets_sent)
+                if now - self.last_sent >= self.interval:
+                    self.last_sent = now
+                    self.packets_sent += 1
+                    payload = struct.pack("HBBH", self.xacThuc1 ,0,self.xacThuc2,self.packets_sent)
                     ok = self.network.write(RF24NetworkHeader(node1), payload)
-                    print(f"Sending  {packets_sent} to {node1}...", "ok." if ok else "failed.")
+                    print(f"Sending  {self.packets_sent} to {node1}...", "ok." if ok else "failed.")
                 
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
