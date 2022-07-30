@@ -47,7 +47,7 @@ class IOT_Rasp:
             else:
                 print("Nhan payload",payload)
     
-    def send(self):
+    def send(self,node):
         self.network.update()
         now = int(time.monotonic_ns() / 1000000)
         # If it's time to send a message, send it!
