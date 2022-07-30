@@ -18,7 +18,8 @@ radio.printPrettyDetails()
 radio.startListening()  # put radio in RX mode
 
 def checkXacThuc(data):
-    if len(data) != 8:
+    print(data)
+    if len(data) != 6:
         return False
     data= struct.unpack("HBBH",data)
     print(data)
