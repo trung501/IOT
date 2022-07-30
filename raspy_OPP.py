@@ -3,7 +3,7 @@ from RF24 import RF24
 from RF24Network import RF24Network,RF24NetworkHeader
 import struct
 import time
-radio=RF24(CE, CSN,1000000)
+radio=RF24(22, 0,1000000)
 node1 = 0o1
 packets_sent = 0
 last_sent = 0
