@@ -19,6 +19,7 @@ radio.startListening()  # put radio in RX mode
 
 xacThuc1=52836
 xacThuc2=147
+xor=450
 def checkXacThuc(data):
     if len(data) != 6:
         return False,0
