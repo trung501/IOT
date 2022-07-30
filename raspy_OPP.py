@@ -5,6 +5,7 @@ import struct
 import time
 
 node1 = 0o1
+node12=0o12
 
 class IOT_Rasp:
     def __init__(self,CE,CSN,this_node):
@@ -58,7 +59,8 @@ class IOT_Rasp:
         if now - self.last_sent >= self.interval:
             self.last_sent = now
             self.packets_sent += 1
-            self.sendToNode(node1,0,self.packets_sent)            
+            #self.sendToNode(node1,0,self.packets_sent)  
+            self.sendToNode(node12,0,self.packets_sent)           
 
     def run(self):
         try:
