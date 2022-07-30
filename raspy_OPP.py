@@ -36,6 +36,13 @@ class IOT_Rasp:
         if data[0]==self.xacThuc1 and data[2]==self.xacThuc2:
             return True,data
     
+    def handleDataReceiveFromNode1(self,data):
+        pass
+    def handleDataReceiveFromNode2(self,data):
+        pass
+    def handleDataReceiveFromNode21(self,data):
+        pass
+
     def receiveFromMCU(self):
         self.network.update()
         while self.network.available():
@@ -46,8 +53,16 @@ class IOT_Rasp:
                 f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
                 f"to {oct(header.to_node)} "
                 )
+                if header.from_node==node1:
+                    self.handleDataReceiveFromNode1(data)
+                elif  header.from_node==node2:
+                    self.handleDataReceiveFromNode2(data)
+                elif header.from_node==node21:
+                    self.handleDataReceiveFromNode21(data)
+                else :
+                    print("Khong co xu ly tu node",header.from_node)
             else:
-                print("Nhan payload",payload)
+                print("Nhan payload",payload,"from node",oct(header.from_node)
     
     def sendToNode(self,node,device,value ):
         payload = struct.pack("HBBH", self.xacThuc1 ,device,self.xacThuc2,self.packets_sent)

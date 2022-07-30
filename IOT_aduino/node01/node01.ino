@@ -31,8 +31,7 @@ void setup() {
   network.begin(90, this_node); //(channel, node address)
   radio.setDataRate(RF24_1MBPS);
   Serial.begin(9600);
-  Serial.println("delay 1000");
-  delay(1000);
+  Serial.println("node01");
   Serial.println("setup finish");
 }
 
