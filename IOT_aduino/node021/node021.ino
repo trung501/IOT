@@ -7,8 +7,9 @@
 
 RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
-const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
+const uint16_t this_node = 021;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
+const uint16_t node01 = 01;
 unsigned int xacThuc1=52836;
 byte xacThuc2=147;
 struct sending{
@@ -43,27 +44,28 @@ void loop() {
     RF24NetworkHeader header;
     sending incomingData;
     network.read(header, &incomingData, sizeof(incomingData)); // Read the incoming data
-    if (header.from_node == 0) {    // If data comes from Node 0
-      if (checkXacThuc(incomingData)){
-        Serial.print("Master ");
-        Serial.print("value ");
-        Serial.println(incomingData.value);
-        }
-       else{
-        Serial.println("Du lieu nhan duoc loi");
-        }
-    }
-    if (header.from_node == 10) {    // If data comes from Node 012
-     Serial.println("Node012");
-    }    
+    if(checkXacThuc(incomingData)){
+      Serial.print("Received value ") ;
+      Serial.print(incomingData.value) ;
+      Serial.print(" of device ") ;
+      Serial.print(incomingData.device) ;
+      Serial.print(" from node ") ;
+      Serial.println(header.from_node);      
+      }    
   }
-
-  sending data ={xacThuc1,1,xacThuc2,20};
-  RF24NetworkHeader header8(master00);
-  bool ok = network.write(header8, &data, sizeof(data)); // Send the data
+  
+  RF24NetworkHeader header00(master00);
+  sending data ={xacThuc1,1,xacThuc2,65};
+  bool ok = network.write(header00, &data, sizeof(data)); // Send the data
   delay(1000);
   data.device=2;
-  data.value=39;
-  ok =  network.write(header8, &data, sizeof(data)); // Send the data
+  data.value=45;
+  ok =  network.write(header00, &data, sizeof(data)); // Send the data
   delay(1000);
+  
+  RF24NetworkHeader header01(node01);
+  data.device=34;
+  data.value=99;
+  ok = network.write(header01, &data, sizeof(data)); // Send the data
+  
 }
