@@ -18,11 +18,11 @@ radio.printPrettyDetails()
 radio.startListening()  # put radio in RX mode
 
 def checkXacThuc(data):
-    print(data)
     if len(data) != 6:
-        return False
+        return False,0
     data= struct.unpack("HBBH",data)
-    print(data)
+    if data[0]==52836 and data[2]==147:
+        return True,data
 
 
 interval = 2000  # in milliseconds
@@ -35,12 +35,15 @@ try:
         network.update()
         while network.available():
             header, payload = network.read(10)  
-            checkXacThuc(payload)
-            # print("lenPayload ",len(payload))
-            # print(
-            #     f"Received payload {payload} from {oct(header.from_node)}",
-            #     f"to {oct(header.to_node)} ",
-            # )
+            checkReceive,data = checkXacThuc(payload)
+            if checkReceive==True:
+                print(
+                f"Received state {data[3]} of device {data[1]} from {oct(header.from_node)}",
+                f"to {oct(header.to_node)} ",
+            )
+            else:
+                print("Nhan payload",payload)
+            
         time.sleep(0.1)
         #radio.stopListening() 
 
