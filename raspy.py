@@ -17,8 +17,8 @@ network.begin(this_node)
 radio.printPrettyDetails()
 radio.startListening()  # put radio in RX mode
 
-def checkXacThuc(data):
-    if 
+# def checkXacThuc(data):
+#     if 
 
 
 interval = 2000  # in milliseconds
