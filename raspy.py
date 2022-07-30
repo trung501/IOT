@@ -17,11 +17,13 @@ network.begin(this_node)
 radio.printPrettyDetails()
 radio.startListening()  # put radio in RX mode
 
+xacThuc1=52836
+xacThuc2=147
 def checkXacThuc(data):
     if len(data) != 6:
         return False,0
     data= struct.unpack("HBBH",data)
-    if data[0]==52836 and data[2]==147:
+    if data[0]==xacThuc1 and data[2]==xacThuc2:
         return True,data
 
 
@@ -54,7 +56,8 @@ try:
         if now - last_sent >= interval:
             last_sent = now
             packets_sent += 1
-            payload = struct.pack("I", packets_sent)
+
+            payload = struct.pack("HBBH", xacThuc1 ,0,xacThuc2,packets_sent)
             ok = network.write(RF24NetworkHeader(other_node1), payload)
             print(f"Sending  {packets_sent} to {other_node1}...", "ok." if ok else "failed.")
         
