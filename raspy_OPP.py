@@ -34,7 +34,7 @@ class IOT_Rasp:
         if data[0]==self.xacThuc1 and data[2]==self.xacThuc2:
             return True,data
     
-    def receive(self):
+    def receiveFromMCU(self):
         self.network.update()
         while self.network.available():
             header, payload = self.network.read(10)  
@@ -47,7 +47,7 @@ class IOT_Rasp:
             else:
                 print("Nhan payload",payload)
     
-    def send(self,node):
+    def sendToMCU(self,node):
         self.network.update()
         now = int(time.monotonic_ns() / 1000000)
         # If it's time to send a message, send it!
@@ -61,9 +61,9 @@ class IOT_Rasp:
     def run(self):
         try:
             while True:
-                self.receive()    
+                self.receiveFromMCU()    
                 time.sleep(0.1)
-                self.send()                
+                self.sendToMCU()                
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
