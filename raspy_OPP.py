@@ -51,7 +51,7 @@ class IOT_Rasp:
     def sendToNode(self,node,device,value ):
         payload = struct.pack("HBBH", self.xacThuc1 ,device,self.xacThuc2,self.packets_sent)
         ok = self.network.write(RF24NetworkHeader(node), payload)
-        print(f"Sending  {value} to device {device} of node {node}...", "ok." if ok else "failed.")
+        print(f"Sending  {value} to device {device} of node {oct(node)}...", "ok." if ok else "failed.")
 
     def sendToMCU(self):
         self.network.update()
