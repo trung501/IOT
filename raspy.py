@@ -41,11 +41,11 @@ class IOT_Rasp:
             return True,data
     
     def handleDataReceiveFromNode1(self,data):
-        self.client.publish(data)
+        self.client.publish(data[3])
     def handleDataReceiveFromNode2(self,data):
-        self.client.publish(data)
+        self.client.publish(data[3])
     def handleDataReceiveFromNode21(self,data):
-        self.client.publish(data)
+        self.client.publish(data[3])
 
     def receiveFromMCU(self):
         self.network.update()
