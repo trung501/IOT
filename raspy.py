@@ -32,7 +32,7 @@ class IOT_Rasp:
 
         self.client = MQTT_client(host_mqtt)
         self.client.topic = 'python'
-        self.client.connect_mqtt()
+        #self.client.connect_mqtt()
     def checkXacThuc(self,data):
         if len(data) != 6:
             return False,0
@@ -41,11 +41,14 @@ class IOT_Rasp:
             return True,data
     
     def handleDataReceiveFromNode1(self,data):
-        self.client.publish(data[3])
+        #self.client.publish(data[3])
+        pass
     def handleDataReceiveFromNode2(self,data):
-        self.client.publish(data[3])
+        #self.client.publish(data[3])
+        pass
     def handleDataReceiveFromNode21(self,data):
-        self.client.publish(data[3])
+        #self.client.publish(data[3])
+        pass
 
     def receiveFromMCU(self):
         self.network.update()
@@ -89,9 +92,8 @@ class IOT_Rasp:
         try:
             while True:
                 self.receiveFromMCU()
-                self.client.subscribe('control')
+                #self.client.subscribe('control')
                 self.sendToMCU()
-
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
