@@ -30,7 +30,7 @@ class IOT_Rasp:
         self.last_sent = 0
         self.packets_sent = 0
 
-        self.client = MQTT_client('192.168.0.187')
+        self.client = MQTT_client('192.168.0.176')
         self.client.topic = 'python'
         self.client.connect_mqtt()
     def checkXacThuc(self,data):
