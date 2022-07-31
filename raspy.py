@@ -10,11 +10,11 @@ node2 = 0o2
 node21=0o21
 
 class IOT_Rasp:
-    def __init__(self,CE,CSN,this_node):
+    def __init__(self,CE,CSN,this_node,host_mqtt='192.168.0.176'):
         self.CE=CE
         self.CSN=CSN
         self.this_node= this_node
-        self.radio = RF24(CE, CSN,1000000)
+        self.radio = RF24(self.CE, self.CSN,1000000)
         self.network=RF24Network(self.radio)
         if not self.radio.begin():
             raise RuntimeError("radio hardware not responding")       
@@ -30,7 +30,7 @@ class IOT_Rasp:
         self.last_sent = 0
         self.packets_sent = 0
 
-        self.client = MQTT_client('192.168.0.176')
+        self.client = MQTT_client(host_mqtt)
         self.client.topic = 'python'
         self.client.connect_mqtt()
     def checkXacThuc(self,data):
@@ -76,6 +76,8 @@ class IOT_Rasp:
     def sendToMCU(self):
         self.network.update()
         now = int(time.monotonic_ns() / 1000000)
+        
+
         if now - self.last_sent >= self.interval:
             self.last_sent = now
             self.packets_sent += 1
@@ -86,8 +88,10 @@ class IOT_Rasp:
     def run(self):
         try:
             while True:
-                self.receiveFromMCU()    
-                self.sendToMCU()                
+                self.receiveFromMCU()
+                self.client.subscribe('control')
+                self.sendToMCU()
+
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
