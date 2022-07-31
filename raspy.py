@@ -1,5 +1,5 @@
 import this
-from IOT_Testing.paho_mqtt import MQTT_client
+from paho_mqtt import MQTT_client
 from RF24 import RF24
 from RF24Network import RF24Network,RF24NetworkHeader
 import struct
