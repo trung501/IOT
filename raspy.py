@@ -1,4 +1,5 @@
 import this
+from IOT_Testing.paho_mqtt import MQTT_client
 from RF24 import RF24
 from RF24Network import RF24Network,RF24NetworkHeader
 import struct
@@ -29,6 +30,9 @@ class IOT_Rasp:
         self.last_sent = 0
         self.packets_sent = 0
 
+        self.client = MQTT_client('192.168.0.187')
+        self.client.topic = 'python'
+        self.client.connect_mqtt()
     def checkXacThuc(self,data):
         if len(data) != 6:
             return False,0
@@ -37,11 +41,11 @@ class IOT_Rasp:
             return True,data
     
     def handleDataReceiveFromNode1(self,data):
-        pass
+        self.client.publish(data)
     def handleDataReceiveFromNode2(self,data):
-        pass
+        self.client.publish(data)
     def handleDataReceiveFromNode21(self,data):
-        pass
+        self.client.publish(data)
 
     def receiveFromMCU(self):
         self.network.update()
