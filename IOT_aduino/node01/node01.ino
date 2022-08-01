@@ -65,7 +65,7 @@ void loop() {
  if ( (unsigned long) (millis() - _time) > TIME_SENDING)
     {
       //Send to node0 - master
-      sendingData(master00,1,20);//node=0,device=1,value=20     
+      bool ok = sendingData(master00,1,20);//node=0,device=1,value=20     
 
      //Update _time var
      _time = millis();
