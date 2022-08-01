@@ -1,3 +1,4 @@
+from itertools import count
 import time
 from paho.mqtt import client as mqtt_client
 
@@ -27,20 +28,26 @@ class MQTT_client():
         else:
             print(f"Failed to send message to topic {self.topic}")
         self.client.loop_stop()
-    def subscribe(self,topic):
+    def subscribe(self,topic='control'):
         self.client.loop_start()
         self.topic = topic
+        result = []
         def on_message(client, userdata, msg):
-            print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+            #print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
+            result.append(msg.payload.decode())
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
         self.client.loop_stop()
+        if len(result) > 0:
+            return result.pop()
+        return 0
 
 def run():
-    client = MQTT_client('192.168.0.187')
-    client.topic = 'python'
+    client = MQTT_client('192.168.0.176')
+    client.topic = 'control'
     client.connect_mqtt()
-    client.publish()
+    while True:
+        print(client.subscribe())
 
     # client = connect_mqtt()
     # subscribe(client)
