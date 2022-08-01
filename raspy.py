@@ -102,8 +102,8 @@ class IOT_Rasp:
         try:
             while True:
                 self.receiveFromMcuAndHandle()
-                self.client.subscribe('control')
-                self.sendToMCU()
+                print(self.client.subscribe('control'))
+                #self.sendToMCU()
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
