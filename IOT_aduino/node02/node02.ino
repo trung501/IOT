@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <Servo.h>
 
-
+unsigned long _time;
 RF24 radio(D4, D8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
@@ -35,6 +35,7 @@ void setup() {
   Serial.println("delay 1000");
   delay(1000);
   Serial.println("setup finish");
+  _time = millis();
 }
 
 void loop() {
@@ -57,21 +58,38 @@ void loop() {
         }
   }
   
-  RF24NetworkHeader header00(master00);
-  sending data ={xacThuc1,1,xacThuc2,6};
-  bool ok = network.write(header00, &data, sizeof(data)); // Send the data
-  delay(1000);
-  data.device=2;
-  data.value=661;
-  ok =  network.write(header00, &data, sizeof(data)); // Send the data
-  Serial.print("Send note 00 is ");
-   Serial.println(ok);
-  delay(1000);
-  
-  RF24NetworkHeader header01(node01);
-  data.device=5;
-  data.value=17;
-  ok = network.write(header01, &data, sizeof(data)); // Send the data
-   Serial.print("Send note 01 is ");
-   Serial.println(ok);
+ //===== Sending data after 10s =====//
+ if ( (unsigned long) (millis() - _time) > 10000)
+    {
+      RF24NetworkHeader header00(master00);
+      sending data ={xacThuc1,1,xacThuc2,6};
+      bool ok = network.write(header00, &data, sizeof(data)); // Send the data
+      data.device=2;
+      data.value=661;
+      ok =  network.write(header00, &data, sizeof(data)); // Send the data
+      Serial.print("Send note 00 is ");
+      if (ok){
+        Serial.println("OK");
+       }
+      else{
+        Serial.println("Fail");
+        }
+      
+      
+      RF24NetworkHeader header01(node01);
+      data.device=5;
+      data.value=17;
+      ok = network.write(header01, &data, sizeof(data)); // Send the data
+       Serial.print("Send note 01 is ");
+       Serial.print("Send note 01 is ");
+      if (ok){
+        Serial.println("OK");
+       }
+      else{
+        Serial.println("Fail");
+        }
+
+         //Update _time var
+        _time = millis();
+     }
 }
