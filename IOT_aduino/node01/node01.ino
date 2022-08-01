@@ -4,13 +4,15 @@
 #include <SPI.h>
 #include <Servo.h>
 
+#define TIME_SENDING 10000
+#define XAC_THUC1 52836
+#define XAC_THUC2 147
+
 unsigned long _time;
 RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
-unsigned int xacThuc1=52836;
-byte xacThuc2=147;
 struct sending{
    unsigned int xacThuc1;
    byte device;
@@ -19,11 +21,17 @@ struct sending{
 };
 
 bool checkXacThuc(sending Data){
-  if (Data.xacThuc1==xacThuc1 && Data.xacThuc2==xacThuc2){
+  if (Data.xacThuc1==XAC_THUC1 && Data.xacThuc2==XAC_THUC2){
     return true;
     }
     return false;
   }
+bool sendingData(const uint16_t node, byte device,unsigned int value ){
+      sending data ={XAC_THUC1,device,XAC_THUC2,value};//device=1,value=20
+      RF24NetworkHeader header(node);
+      return network.write(header, &data, sizeof(data)); // Send the data   
+  }
+  
 
 void setup() {
   SPI.begin();
@@ -54,12 +62,10 @@ void loop() {
   }
 
   //===== Sending data after 10s =====//
- if ( (unsigned long) (millis() - _time) > 10000)
+ if ( (unsigned long) (millis() - _time) > TIME_SENDING)
     {
       //Send to node0 - master
-      sending data ={xacThuc1,1,xacThuc2,20};//device=1,value=20
-      RF24NetworkHeader header8(master00);
-      bool ok = network.write(header8, &data, sizeof(data)); // Send the data   
+      sendingData(master00,1,20);//node=0,device=1,value=20     
 
      //Update _time var
      _time = millis();
