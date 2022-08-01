@@ -71,7 +71,7 @@ void loop() {
       }    
   }
 
-  //===== Sending data after 10s =====//
+  //===== Sending data after TIME_SENDING =====//
  if ( (unsigned long) (millis() - _time) > TIME_SENDING)
     {
       //Send to node0 - master
