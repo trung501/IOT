@@ -11,7 +11,7 @@
 unsigned long _time;
 RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
-const uint16_t this_node = 021;   // Address of our node in Octal format ( 04,031, etc)
+const uint16_t this_node = 012;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 const uint16_t node01 = 01;
 
