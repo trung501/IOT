@@ -52,6 +52,8 @@ void loop() {
       Serial.println(header.from_node);      
       }    
   }
+
+  //===== Sending data after 10s =====//
  if ( (unsigned long) (millis() - time) > 10000)
     {
       sending data ={xacThuc1,1,xacThuc2,20};
