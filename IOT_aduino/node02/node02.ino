@@ -4,14 +4,16 @@
 #include <SPI.h>
 #include <Servo.h>
 
+#define TIME_SENDING 5000
+#define XAC_THUC1 52836
+#define XAC_THUC2 147
+
 unsigned long _time;
 RF24 radio(D4, D8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 const uint16_t node01 = 01;
-unsigned int xacThuc1=52836;
-byte xacThuc2=147;
 struct sending{
    unsigned short xacThuc1;
    byte device;
@@ -20,10 +22,16 @@ struct sending{
 };
 
 bool checkXacThuc(sending Data){
-  if (Data.xacThuc1==xacThuc1 && Data.xacThuc2==xacThuc2){
+  if (Data.xacThuc1==XAC_THUC1 && Data.xacThuc2==XAC_THUC2){
     return true;
     }
     return false;
+  }
+
+ bool sendingData(const uint16_t node, byte device,unsigned int value ){
+      sending data ={XAC_THUC1,device,XAC_THUC2,value};//device=1,value=20
+      RF24NetworkHeader header(node);
+      return network.write(header, &data, sizeof(data)); // Send the data   
   }
 
 void setup() {
@@ -61,12 +69,8 @@ void loop() {
  //===== Sending data after 10s =====//
  if ( (unsigned long) (millis() - _time) > 10000)
     {
-      RF24NetworkHeader header00(master00);
-      sending data ={xacThuc1,1,xacThuc2,6};
-      bool ok = network.write(header00, &data, sizeof(data)); // Send the data
-      data.device=2;
-      data.value=661;
-      ok =  network.write(header00, &data, sizeof(data)); // Send the data
+
+      bool ok = sendingData(master00,1,6);//node=0,device=1,value=6    
       Serial.print("Send note 00 is ");
       if (ok){
         Serial.println("OK");
@@ -76,10 +80,7 @@ void loop() {
         }
       
       
-      RF24NetworkHeader header01(node01);
-      data.device=5;
-      data.value=17;
-      ok = network.write(header01, &data, sizeof(data)); // Send the data
+      ok = sendingData(node01,5,17);//node=1,device=5,value=17    
        Serial.print("Send note 01 is ");
        Serial.print("Send note 01 is ");
       if (ok){
