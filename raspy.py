@@ -101,7 +101,7 @@ class IOT_Rasp:
         self.client.connect_mqtt()
         try:
             while True:
-                self.receiveFromMCU()
+                self.receiveFromMcuAndHandle()
                 #self.client.subscribe('control')
                 self.sendToMCU()
         except KeyboardInterrupt:
