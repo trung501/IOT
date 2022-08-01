@@ -39,6 +39,7 @@ class MQTT_client():
             #     return result[-1]
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
+        self.client.loop_stop()
         # self.client.loop_forever()
         # if len(result) > 0:
         #     return result.pop()
