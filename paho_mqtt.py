@@ -29,6 +29,7 @@ class MQTT_client():
             print(f"Failed to send message to topic {self.topic}")
         self.client.loop_stop()
     def subscribe(self,topic='control'):
+        self.client.loop_start()
         self.topic = topic
         result = []
         def on_message(client, userdata, msg):
