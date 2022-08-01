@@ -103,7 +103,7 @@ class IOT_Rasp:
             while True:
                 self.receiveFromMcuAndHandle()
                 control = self.client.subscribe('control')
-                if not control:
+                if control != 0:
                     print(control)
                 #self.sendToMCU()
         except KeyboardInterrupt:
