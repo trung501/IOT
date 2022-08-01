@@ -76,13 +76,7 @@ void loop() {
     {
       //Send to node0 - master
       bool ok = sendingData(master00,1,20);//node=0,device=1,value=20   
-       Serial.print("Send note 00 is ");  
-       if (ok){
-        Serial.println("OK");
-       }
-      else{
-        Serial.println("Fail");
-        }
+       
      //Update _time var
      _time = millis();
     } 
