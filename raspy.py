@@ -47,10 +47,8 @@ class IOT_Rasp:
     def handleDataReceiveFromNode1(self,data):
         # data[1] = 1 - nhiet do
         # data[2] = 2 - do am
-        if self.check_server_mqtt():
-            self.client.connect_mqtt()
-            self.client.topic = f"node1/{data[1]}"
-            self.client.publish(data[3])
+        self.client.topic = f"node1/{data[1]}"
+        self.client.publish(data[3])
     def handleDataReceiveFromNode2(self,data):
         #self.client.publish(data[3])
         pass
@@ -97,6 +95,10 @@ class IOT_Rasp:
             self.sendToNode(node21,0,self.packets_sent+15)           
 
     def run(self):
+        if not self.check_server_mqtt():
+            print("not connect server mqtt!!")
+            return
+        self.client.connect_mqtt()
         try:
             while True:
                 self.receiveFromMCU()
