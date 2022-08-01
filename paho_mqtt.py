@@ -34,16 +34,17 @@ class MQTT_client():
         result = []
         def on_message(client, userdata, msg):
             print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
-            # result.append(msg.payload.decode())
+            result.append(msg.payload.decode())
+            return
             # if len(result) > 1:
             #     return result[-1]
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
         self.client.loop_stop()
         # self.client.loop_forever()
-        # if len(result) > 0:
-        #     return result.pop()
-        # return 5
+        if len(result) > 0:
+            return result.pop()
+        return 5
 
 def run():
     client = MQTT_client('192.168.0.176')
