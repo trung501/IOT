@@ -56,7 +56,7 @@ class IOT_Rasp:
         #self.client.publish(data[3])
         pass
 
-    def receiveFromMCU(self):
+    def receiveFromMcuAndHandle(self):
         self.network.update()
         while self.network.available():
             header, payload = self.network.read(10)  
