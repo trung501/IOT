@@ -57,7 +57,7 @@ void loop() {
  if ( (unsigned long) (millis() - _time) > 10000)
     {
       //Send to node0 - master
-      sending data ={xacThuc1,1,xacThuc2,20};
+      sending data ={xacThuc1,1,xacThuc2,20};//device=1,value=20
       RF24NetworkHeader header8(master00);
       bool ok = network.write(header8, &data, sizeof(data)); // Send the data   
 
