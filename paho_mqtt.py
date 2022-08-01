@@ -40,7 +40,7 @@ class MQTT_client():
         self.client.loop_stop()
         if len(result) > 0:
             return result.pop()
-        return 0
+        return 5
 
 def run():
     client = MQTT_client('192.168.0.176')
