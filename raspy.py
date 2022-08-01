@@ -37,7 +37,7 @@ class IOT_Rasp:
             return False,0
         data= struct.unpack("HBBH",data)
         if data[0]==self.xacThuc1 and data[2]==self.xacThuc2:
-            return True,data
+            return True,{"device":data[1],"value":data[3]}
     def check_server_mqtt(self):
         try:
             self.client.connect_mqtt()
@@ -47,8 +47,8 @@ class IOT_Rasp:
     def handleDataReceiveFromNode1(self,data):
         # data[1] = 1 - nhiet do
         # data[2] = 2 - do am
-        self.client.topic = f"node1/{data[1]}"
-        self.client.publish(data[3])
+        self.client.topic = f"node1/{data["device"]}"
+        self.client.publish(data["value"])
     def handleDataReceiveFromNode2(self,data):
         #self.client.publish(data[3])
         pass
@@ -63,7 +63,7 @@ class IOT_Rasp:
             checkReceive,data = self.checkXacThuc(payload)
             if checkReceive==True:
                 print(
-                f"Received value {data[3]} of device {data[1]} from {oct(header.from_node)}",
+                f"Received value {data["value"]} of device {data["device"]} from {oct(header.from_node)}",
                 f"to {oct(header.to_node)} "
                 )
                 if header.from_node==node1:
