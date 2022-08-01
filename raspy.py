@@ -29,20 +29,28 @@ class IOT_Rasp:
         self.interval=2000
         self.last_sent = 0
         self.packets_sent = 0
-
+        # client mqtt
         self.client = MQTT_client(host_mqtt)
-        self.client.topic = 'python'
-        #self.client.connect_mqtt()
+
     def checkXacThuc(self,data):
         if len(data) != 6:
             return False,0
         data= struct.unpack("HBBH",data)
         if data[0]==self.xacThuc1 and data[2]==self.xacThuc2:
             return True,data
-    
+    def check_server_mqtt(self):
+        try:
+            self.client.connect_mqtt()
+            return True
+        except:
+            return False
     def handleDataReceiveFromNode1(self,data):
-        #self.client.publish(data[3])
-        pass
+        # data[1] = 1 - nhiet do
+        # data[2] = 2 - do am
+        if self.check_server_mqtt():
+            self.client.connect_mqtt()
+            self.client.topic = f"node1/{data[1]}"
+            self.client.publish(data[3])
     def handleDataReceiveFromNode2(self,data):
         #self.client.publish(data[3])
         pass
