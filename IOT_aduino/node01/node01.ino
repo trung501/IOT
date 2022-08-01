@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <Servo.h>
 
-
+unsigned long time;
 RF24 radio(7, 8);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
@@ -33,6 +33,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("node01");
   Serial.println("setup finish");
+  time = millis();
 }
 
 void loop() {
@@ -51,13 +52,16 @@ void loop() {
       Serial.println(header.from_node);      
       }    
   }
-
-  sending data ={xacThuc1,1,xacThuc2,20};
-  RF24NetworkHeader header8(master00);
-  bool ok = network.write(header8, &data, sizeof(data)); // Send the data
-  delay(1000);
-  data.device=2;
-  data.value=39;
-  ok =  network.write(header8, &data, sizeof(data)); // Send the data
-  delay(1000);
+ if ( (unsigned long) (millis() - time) > 10000)
+    {
+      sending data ={xacThuc1,1,xacThuc2,20};
+      RF24NetworkHeader header8(master00);
+      bool ok = network.write(header8, &data, sizeof(data)); // Send the data
+      delay(1000);
+      data.device=2;
+      data.value=39;
+      ok =  network.write(header8, &data, sizeof(data)); // Send the data
+      delay(1000);
+    } 
+    
 }
