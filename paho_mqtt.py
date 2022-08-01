@@ -34,7 +34,7 @@ class MQTT_client():
         def on_message(client, userdata, msg):
             #print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
             result.append(msg.payload.decode())
-            #print(result[-1])
+            print(result[-1])
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
         self.client.loop_forever()
