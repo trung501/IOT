@@ -101,7 +101,7 @@ class IOT_Rasp:
         self.client.connect_mqtt()
         try:
             while True:
-                self.receiveFromMcuAndHandle()
+                #self.receiveFromMcuAndHandle()
                 control = self.client.subscribe('control')
                 if control != 5:
                     print(control)
