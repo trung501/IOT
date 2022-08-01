@@ -29,7 +29,17 @@ bool checkXacThuc(sending Data){
 bool sendingData(const uint16_t node, byte device,unsigned int value ){
       sending data ={XAC_THUC1,device,XAC_THUC2,value};//device=1,value=20
       RF24NetworkHeader header(node);
-      return network.write(header, &data, sizeof(data)); // Send the data   
+      bool ok= network.write(header, &data, sizeof(data)); // Send the data   
+      Serial.print("Send note ");  
+      Serial.print(node); 
+      Serial.print(" is "); 
+       if (ok){
+        Serial.println("OK");
+       }
+      else{
+        Serial.println("Fail");
+        }
+       return ok;
   }
   
 

@@ -28,10 +28,20 @@ bool checkXacThuc(sending Data){
     return false;
   }
 
- bool sendingData(const uint16_t node, byte device,unsigned int value ){
+bool sendingData(const uint16_t node, byte device,unsigned int value ){
       sending data ={XAC_THUC1,device,XAC_THUC2,value};//device=1,value=20
       RF24NetworkHeader header(node);
-      return network.write(header, &data, sizeof(data)); // Send the data   
+      bool ok= network.write(header, &data, sizeof(data)); // Send the data   
+      Serial.print("Send note ");  
+      Serial.print(node); 
+      Serial.print(" is "); 
+       if (ok){
+        Serial.println("OK");
+       }
+      else{
+        Serial.println("Fail");
+        }
+       return ok;
   }
 
 void setup() {
@@ -67,29 +77,14 @@ void loop() {
   }
   
  //===== Sending data after 10s =====//
- if ( (unsigned long) (millis() - _time) > 10000)
+ if ( (unsigned long) (millis() - _time) > TIME_SENDING)
     {
 
-      bool ok = sendingData(master00,1,6);//node=0,device=1,value=6    
-      Serial.print("Send note 00 is ");
-      if (ok){
-        Serial.println("OK");
-       }
-      else{
-        Serial.println("Fail");
-        }
+      bool ok = sendingData(master00,1,6);//node=0,device=1,value=6      
       
       
       ok = sendingData(node01,5,17);//node=1,device=5,value=17    
-       Serial.print("Send note 01 is ");
-       Serial.print("Send note 01 is ");
-      if (ok){
-        Serial.println("OK");
-       }
-      else{
-        Serial.println("Fail");
-        }
-
+       
          //Update _time var
         _time = millis();
      }
