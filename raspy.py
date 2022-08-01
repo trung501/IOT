@@ -47,7 +47,7 @@ class IOT_Rasp:
     def handleDataReceiveFromNode1(self,data):
         # data[1] = 1 - nhiet do
         # data[2] = 2 - do am
-        self.client.topic = f"node1/{data["device"]}"
+        self.client.topic = f"node1/{data['device']}"
         self.client.publish(data["value"])
     def handleDataReceiveFromNode2(self,data):
         #self.client.publish(data[3])
@@ -63,7 +63,7 @@ class IOT_Rasp:
             checkReceive,data = self.checkXacThuc(payload)
             if checkReceive==True:
                 print(
-                f"Received value {data["value"]} of device {data["device"]} from {oct(header.from_node)}",
+                f"Received value {data['value']} of device {data['device']} from {oct(header.from_node)}",
                 f"to {oct(header.to_node)} "
                 )
                 if header.from_node==node1:
