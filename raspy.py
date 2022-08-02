@@ -108,6 +108,7 @@ class IOT_Rasp:
                 time.sleep(1)
                 value_sub = self.client.get_subscribe()
                 print(value_sub)
+                print(self.client.get_subscribe())
                 
                 
                 #self.sendToMCU()
