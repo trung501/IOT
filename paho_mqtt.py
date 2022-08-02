@@ -51,6 +51,7 @@ def run():
     client = MQTT_client('192.168.0.176')
     client.topic = 'control'
     client.connect_mqtt()
+    client.client.loop_start()
     while True:
     #   
         # time.sleep(1)
