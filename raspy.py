@@ -102,7 +102,7 @@ class IOT_Rasp:
         self.client.client.loop_start()
         try:
             while True:
-                self.receiveFromMcuAndHandle()
+                #self.receiveFromMcuAndHandle()
                 check,value = self.client.get_subscribe()
                 if check:
                     print(value)
