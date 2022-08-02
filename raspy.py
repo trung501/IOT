@@ -101,11 +101,11 @@ class IOT_Rasp:
         self.client.topic = 'control'
         self.client.connect_mqtt()
         self.client.client.loop_start()
-        print("asdfjsk")
         try:
             while True:
                 #self.receiveFromMcuAndHandle()
                 check,value = self.client.get_subscribe('control')
+                print(value)
                 if check:
                     print(value)
                 #self.sendToMCU()
