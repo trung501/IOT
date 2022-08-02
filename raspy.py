@@ -105,10 +105,8 @@ class IOT_Rasp:
             while True:
                 #self.receiveFromMcuAndHandle()
                 time.sleep(1)
-                old_value = self.client.subscribe_value
-                new_value = self.client.get_subscribe()
-                if old_value != new_value :
-                    print(new_value)
+                if self.client.subscribe_value != self.client.get_subscribe() :
+                    print('ok')
                 
                 
                 #self.sendToMCU()
