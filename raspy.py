@@ -100,6 +100,7 @@ class IOT_Rasp:
             return
         self.client.topic = 'control'
         self.client.connect_mqtt()
+        print("afdfas")
         self.client.client.loop_start()
         try:
             while True:
