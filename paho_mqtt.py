@@ -20,7 +20,6 @@ class MQTT_client():
         self.client.on_connect = on_connect
         self.client.connect(self.host,self.port)
     def publish(self,msg="hello nod-red"):
-        # self.client.loop_start()
         result = self.client.publish(self.topic, msg)
         # result: [0, 1]
         status = result[0]
@@ -28,21 +27,18 @@ class MQTT_client():
             print(f"Send `{msg}` to topic `{self.topic}`")
         else:
             print(f"Failed to send message to topic {self.topic}")
-        # self.client.loop_stop()
     def subscribe(self,topic='control'):
         self.topic = topic
         def on_message(client, userdata, msg):
             print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
             self.subscribe_value= (msg.payload.decode())
-            time.sleep(2)
-        #self.client.loop_start()
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
     def get_subscribe(self,topic='control'):
         # old_value = self.subscribe_value
         self.subscribe(topic)
         # if old_value != self.subscribe_value :
-        return str(self.subscribe_value)
+        return self.subscribe_value
         # else:
         #     return 5
 
