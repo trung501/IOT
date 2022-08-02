@@ -38,12 +38,12 @@ class MQTT_client():
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
     def get_subscribe(self,topic='control'):
-        old_value = self.subscribe_value
+        # old_value = self.subscribe_value
         self.subscribe(topic)
-        if old_value != self.subscribe_value :
-            return self.subscribe_value
-        else:
-            return 5
+        # if old_value != self.subscribe_value :
+        return self.subscribe_value
+        # else:
+        #     return 5
 
 
 
