@@ -99,7 +99,7 @@ class IOT_Rasp:
             print("not connect server mqtt!!")
             return
         self.client.connect_mqtt()
-        self.client.client.subscribe()
+        self.client.client.subscribe('control')
         self.client.client.loop_start()
         try:
             while True:
