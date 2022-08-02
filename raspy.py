@@ -106,7 +106,7 @@ class IOT_Rasp:
             old_value =self.client.subscribe_value
             while True:
                 self.receiveFromMcuAndHandle()
-                # time.sleep(1)
+                time.sleep(1)
                 current_value=self.client.get_subscribe()
                 if old_value != current_value:
                     print(current_value)
