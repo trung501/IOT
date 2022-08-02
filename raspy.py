@@ -105,16 +105,13 @@ class IOT_Rasp:
         try:
             old_value =self.client.subscribe_value
             while True:
-                #self.receiveFromMcuAndHandle()
-                time.sleep(1)
+                self.receiveFromMcuAndHandle()
+                # time.sleep(1)
                 current_value=self.client.get_subscribe()
                 if old_value != current_value:
                     print(current_value)
                     old_value=current_value
-                # print(self.client.get_subscribe())
-                
-                
-                #self.sendToMCU()
+                self.sendToMCU()
         except KeyboardInterrupt:
             print("powering down radio and exiting.")
             self.radio.powerDown()
