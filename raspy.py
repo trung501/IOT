@@ -103,12 +103,14 @@ class IOT_Rasp:
         self.client.connect_mqtt()
         self.client.client.loop_start()
         try:
+            old_value =self.client.subscribe_value
             while True:
                 #self.receiveFromMcuAndHandle()
                 time.sleep(1)
-                old_value = self.client.subscribe_value
-                value_sub = self.client.get_subscribe()
-                print(value_sub,old_value)
+                current_value=self.client.get_subscribe()
+                if old_value != current_value:
+                    print(current_value)
+                    old_value=current_value
                 # print(self.client.get_subscribe())
                 
                 
