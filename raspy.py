@@ -98,12 +98,13 @@ class IOT_Rasp:
         if not self.check_server_mqtt():
             print("not connect server mqtt!!")
             return
+        self.client.topic = 'control'
         self.client.connect_mqtt()
         self.client.client.loop_start()
         try:
             while True:
                 #self.receiveFromMcuAndHandle()
-                check,value = self.client.get_subscribe()
+                check,value = self.client.get_subscribe('control')
                 if check:
                     print(value)
                 #self.sendToMCU()
@@ -112,7 +113,7 @@ class IOT_Rasp:
             self.radio.powerDown()
 
 
-IOT=IOT_Rasp(22, 0,0o0)
+IOT=IOT_Rasp(22, 0,0o0,host_mqtt='localhost')
 IOT.run()
 
 
