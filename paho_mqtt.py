@@ -8,6 +8,7 @@ class MQTT_client():
         self.port = port
         self.client = mqtt_client.Client(self.host)
         self.topic = topic
+        self.subscribe_value = None
     def set_username_password(self,username,password):
         self.client.username_pw_set(username,password)
     def connect_mqtt(self):
@@ -29,37 +30,34 @@ class MQTT_client():
             print(f"Failed to send message to topic {self.topic}")
         self.client.loop_stop()
     def subscribe(self,topic='control'):
-        self.client.loop_start()
         self.topic = topic
-        result = []
         def on_message(client, userdata, msg):
             print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
-            result.append(msg.payload.decode())
-            return
-            # if len(result) > 1:
-            #     return result[-1]
+            self.subscribe_value= (msg.payload.decode())
+        self.client.loop_start()
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
-        self.client.loop_stop()
-        # self.client.loop_forever()
-        if len(result) > 0:
-            return result.pop()
-        return 5
+    def get_subscribe(self,topic='control'):
+        old_value = self.subscribe_value
+        self.subscribe(topic)
+        if old_value != self.subscribe_value :
+            return True,self.subscribe_value
+        else:
+            return False,0
+
+
 
 def run():
     client = MQTT_client('192.168.0.176')
     client.topic = 'control'
     client.connect_mqtt()
     while True:
-        print(client.subscribe())
-
-    # client = connect_mqtt()
-    # subscribe(client)
-    # client.loop_forever()
-    # client.loop_start()
-    # #client.loop_start()
-    # #publish(client)
-
+    #   
+        # time.sleep(1)
+        check,value = client.get_subscribe()
+        if check:
+            print(value)
+            
 
 if __name__ == '__main__':
     run()
