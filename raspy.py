@@ -99,6 +99,7 @@ class IOT_Rasp:
             print("not connect server mqtt!!")
             return
         self.client.topic = 'control'
+        self.client.subscribe_value = 'start'
         self.client.connect_mqtt()
         self.client.client.loop_start()
         try:
