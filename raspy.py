@@ -106,7 +106,7 @@ class IOT_Rasp:
                 #self.receiveFromMcuAndHandle()
                 time.sleep(1)
                 check,value = self.client.get_subscribe('control')
-                print(value,self.client.subscribe_value)
+                print(check,self.client.subscribe_value)
                 if check:
                     print(value)
                 #self.sendToMCU()
