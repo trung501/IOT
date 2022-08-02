@@ -41,9 +41,9 @@ class MQTT_client():
         old_value = self.subscribe_value
         self.subscribe(topic)
         if old_value != self.subscribe_value :
-            return True,self.subscribe_value
+            return self.subscribe_value
         else:
-            return False,0
+            return 5
 
 
 

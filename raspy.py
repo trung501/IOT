@@ -105,9 +105,8 @@ class IOT_Rasp:
             while True:
                 #self.receiveFromMcuAndHandle()
                 time.sleep(1)
-                check,value = self.client.get_subscribe('control')
-                print(check,self.client.subscribe_value)
-                if check:
+                value = self.client.get_subscribe('control')
+                if value != 5:
                     print(value)
                 #self.sendToMCU()
         except KeyboardInterrupt:
