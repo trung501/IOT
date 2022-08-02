@@ -34,6 +34,7 @@ class MQTT_client():
         def on_message(client, userdata, msg):
             print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic on server mqtt")
             self.subscribe_value= (msg.payload.decode())
+            time.sleep(2)
         #self.client.loop_start()
         self.client.subscribe(self.topic)
         self.client.on_message = on_message
